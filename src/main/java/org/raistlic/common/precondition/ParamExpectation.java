@@ -16,8 +16,6 @@
 
 package org.raistlic.common.precondition;
 
-import java.util.Objects;
-
 /**
  * @author Lei CHEN (2015-02-18)
  * @since 1.2
@@ -75,7 +73,7 @@ public final class ParamExpectation {
 
     public void equalTo(Object target, String message) {
 
-      if (!Objects.equals(this.param, target)) {
+      if (!objectsEqual(this.param, target)) {
 
         if (message == null) {
           message = (name == null) ? "" : "'" + name + "' should be equal to '" + target + "', but is not.";
@@ -91,7 +89,7 @@ public final class ParamExpectation {
 
     public void notEqualTo(Object target, String message) {
 
-      if (Objects.equals(this.param, target)) {
+      if (objectsEqual(this.param, target)) {
 
         if (message == null) {
           message = (name == null) ? "" : "'" + name + "' should not be equal to '" + target + "'.";
@@ -152,7 +150,7 @@ public final class ParamExpectation {
 
     public void equalTo(String target, String message) {
 
-      if (!Objects.equals(this.param, target)) {
+      if (!objectsEqual(this.param, target)) {
 
         if (message == null) {
           message = (name == null) ? "" : "'" + name + "' should be equal to '" + target + "', but is not.";
@@ -168,7 +166,7 @@ public final class ParamExpectation {
 
     public void notEqualTo(Object target, String message) {
 
-      if (Objects.equals(this.param, target)) {
+      if (objectsEqual(this.param, target)) {
 
         if (message == null) {
           message = (name == null) ? "" : "'" + name + "' should not be equal to '" + target + "'.";
@@ -373,5 +371,15 @@ public final class ParamExpectation {
   private static void error(String message) {
 
     throw new InvalidParameterException(message);
+  }
+
+  private static boolean objectsEqual(Object a, Object b) {
+
+    if (a == null) {
+      return b == null;
+    }
+    else {
+      return a.equals(b);
+    }
   }
 }
